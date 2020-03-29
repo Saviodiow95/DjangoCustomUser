@@ -3,8 +3,9 @@ from django.contrib.auth import login, authenticate, logout
 
 from accounts.forms import *
 
+
 def home(request):
-    return render(request,'base.html')
+    return render(request, 'base.html')
 
 
 def registration_user(request):
@@ -64,29 +65,18 @@ def account_user(request):
 
     context = {}
     if request.POST:
-        form = AccountUpdateForm(request.POST, instance=request.user)
+        form = AccountUpdateForm(request.POST or None, request.FILES or None, instance=request.user)
         if form.is_valid():
-            form.initial = {
-                "email": request.POST['email'],
-                "username": request.POST['username'],
-            }
+            print(request.POST.get('photo'))
+            print('---------------------------------------')
             form.save()
-            context['success_message'] = "Updated"
+            context['success_message'] = "Atualizado"
     else:
-        form = AccountUpdateForm(
-
-            initial={
-                "email": request.user.email,
-                "username": request.user.username,
-            }
-        )
+        form = AccountUpdateForm(instance=request.user)
 
     context['account_form'] = form
 
-
-
     return render(request, "accounts/account.html", context)
-
 
 def must_authenticate_user(request):
     return render(request, 'account/must_authenticate.html', {})

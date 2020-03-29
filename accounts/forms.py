@@ -31,7 +31,7 @@ class AccountAuthenticationForm(forms.ModelForm):
 class AccountUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'username',)
+        fields = ('email', 'username','first_name', 'photo',)
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -48,3 +48,4 @@ class AccountUpdateForm(forms.ModelForm):
         except User.DoesNotExist:
             return username
         raise forms.ValidationError('Username "%s" já está em uso.' % username)
+
