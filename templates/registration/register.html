@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Cadastro {% endblock %}
+
+{% block main %}
+    <h4 >Cadastrar</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        {{ form.as_p }}
+
+        <button type="submit" >Registrar</button>
+    </form>
+{% endblock %}
